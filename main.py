@@ -7,17 +7,16 @@ from datetime import datetime, timedelta
 # Bot token
 BOT_TOKEN = '7701905324:AAGrLHNe5wuAIzVHLv2yVRiS1vFaNekvKug'
 OWNER_USER_ID = 7303810912
-PROOF_CHANNEL_ID = -1002113563800
-FORWARD_CHANNEL_IDS = [-1001676737394, -1002181773077, -1002224203739]
+PROOF_CHANNEL_ID = -1002113563800 #Replace With The Chat Id Of The Channel Which Will Be Proof Channel
+FORWARD_CHANNEL_IDS = [-1001676737394, -1002181773077, -1002224203739] #Replace With The Ids Of The Channel To Be Posted
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-required_channels = ["@ModVipRM", "@ModviprmBackup", "@modDirect_download", "@Proofchannelch"]
+required_channels = ["@TheSmartDev", "@modviprmbackup", "@modDirect_download"]
 buttons = [
-    ("🔗 ModVipRM", "https://t.me/ModVipRM"),
-    ("🔗 ModVipRM Backup", "https://t.me/ModviprmBackup"),
-    ("📂 ModVipRM APK", "https://t.me/modDirect_download"),
-    ("📢 Proof Channel", "https://t.me/Proofchannelch")
+    ("🔗SmartDev", "https://t.me/TheSmartDev"),
+    ("🔗 ModVipRM Backup", "https://t.me/modviprmbackup"),
+    ("📂 ModVipRM APK", "https://t.me/modDirect_download")
 ]
 
 # Dictionary to store the mapping of forwarded messages to original users
@@ -63,12 +62,12 @@ promo_links = {
 
 # Define image URLs for different services
 service_images = {
-    "YouTube": "https://t.me/abir_x_official_developer/82",
-    "Crunchyroll": "https://t.me/abir_x_official_developer/86",
-    "Netflix": "https://t.me/abir_x_official_developer/88",
-    "PrimeVideo": "https://t.me/abir_x_official_developer/89",
-    "Canva": "https://t.me/abir_x_official_developer/91",
-    "Spotify": "https://t.me/abir_x_official_developer/93"
+    "YouTube": "https://t.me/BotsDevZone/269",
+    "Crunchyroll": "https://t.me/BotsDevZone/270",
+    "Netflix": "https://t.me/BotsDevZone/271",
+    "PrimeVideo": "https://t.me/BotsDevZone/272",
+    "Canva": "https://t.me/BotsDevZone/273",
+    "Spotify": "https://t.me/BotsDevZone/274"
 }
 
 # Storage for generated codes and redeemed information
@@ -101,15 +100,14 @@ def start(message):
         if not is_user_in_channels(user_id):
             keyboard = InlineKeyboardMarkup()
             # Arrange buttons in 2-2-1 formation
-            keyboard.row(InlineKeyboardButton(text="🔗 ModVipRM", url="https://t.me/ModVipRM"),
-                         InlineKeyboardButton(text="🔗 ModVipRM Backup", url="https://t.me/ModviprmBackup"))
-            keyboard.row(InlineKeyboardButton(text="📂 ModVipRM APK", url="https://t.me/modDirect_download"),
-                         InlineKeyboardButton(text="📢 Proof Channel", url="https://t.me/Proofchannelch"))
+            keyboard.row(InlineKeyboardButton(text="🔗 SmartDev", url="https://t.me/TheSmartDev"),
+                         InlineKeyboardButton(text="🔗 ModVipRM Backup", url="https://t.me/modviprmbackup"))
+            keyboard.row(InlineKeyboardButton(text="📂 ModVipRM APK", url="https://t.me/modDirect_download"))
             keyboard.add(InlineKeyboardButton(text="✅ Joined", callback_data="joined_check"))
             
             bot.send_photo(
                 message.chat.id,
-                photo="https://t.me/abir_x_official_developer/77",
+                photo="https://t.me/BotsDevZone/275",
                 caption=("*Welcome to Redeem Code ABIR XD Bot!*\n\n"
                          "*You can now use the bot.*\n"
                          "*Use /redeem <code> to redeem a code.*\n"
@@ -266,7 +264,7 @@ def redeem_code(message):
     except ValueError:
         bot.send_photo(
             message.chat.id,
-            photo="https://t.me/abir_x_official_developer/85",
+            photo="https://t.me/BotsDevZone/275",
             caption="Please provide a code to redeem."
         )
         return
@@ -274,7 +272,7 @@ def redeem_code(message):
     if code not in generated_codes:
         bot.send_photo(
             message.chat.id,
-            photo="https://t.me/abir_x_official_developer/79",
+            photo="https://t.me/BotsDevZone/275",
             caption="Invalid redeem code. Please try again with a valid code."
         )
         return
@@ -283,7 +281,7 @@ def redeem_code(message):
         redeemer = generated_codes[code]
         bot.send_photo(
             message.chat.id,
-            photo="https://t.me/abir_x_official_developer/81",
+            photo="https://t.me/BotsDevZone/275",
             caption=(f"🎉 *Code Already Redeemed!*\n"
                      f"👤 *Name:* {redeemer['full_name']}\n"
                      f"📛 *Username:* {redeemer['username']}\n"
@@ -313,7 +311,7 @@ def redeem_code(message):
     else:
         promo_link = random.choice(promo_links.get(service_name, ["Email: example@default.com Pass: password"]))  # Default email-pass format if service not found
 
-    image_url = service_images.get(service_name, "https://t.me/abir_x_official_developer/82")  # Default to YouTube image if service not found
+    image_url = service_images.get(service_name, "https://t.me/BotsDevZone/269")  # Default to YouTube image if service not found
 
     # Check if the promo link is an email/pass format or a URL
     if service_name == "Youtube" or "Email:" not in promo_link:
@@ -398,295 +396,6 @@ def broadcast_message(message):
 
     # Notify the owner that the broadcast was successful
     bot.send_message(OWNER_USER_ID, "*Broadcast successful!*".replace('_', '\\_'), parse_mode="Markdown")
-
-# Stats command handler
-@bot.message_handler(commands=['stats'])
-def stats(message):
-    current_time = datetime.now()
-    uptime = current_time - start_time
-    hours, remainder = divmod(int(uptime.total_seconds()), 3600)
-    minutes, seconds = divmod(remainder, 60)
-
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="☑️ ᴊᴏɪɴ ᴏᴜʀ ᴄᴏᴅɪɴɢ ᴄʜᴀɴɴᴇʟ ☑️", url="https://t.me/addlist/wskLZdSg8K02NzVl"))
-
-    bot.send_photo(
-        message.chat.id,
-        photo="https://t.me/abir_x_official_developer/84",
-        caption=(
-            "➠ 📊 *｢Bot Live Statistics 」* 📊\n"
-            "┏━━━━━━━━━━━━━━━━━━━\n"
-            f"┣☑️ *Total Users:* {len(user_ids)} *People*\n"
-            "┣━━━━━━━━━━━━━━━━━━━\n"
-            f"┣☑️ *Uptime :*  {hours} hours {minutes} mins {seconds} secs 📨\n"
-            "┗━━━━━━━━━━━━━━━━━━━\n\n"
-            "☠️ *ᴠᴇʀꜱɪᴏɴ : Latest*\n\n"
-            "🔄 *ʟᴀꜱᴛ ᴜᴘᴅᴀᴛᴇ 24 Dec ,2024*\n\n"
-            "☑️ *ʙᴏᴛ ᴄʀᴇᴀᴛᴏʀ : @abirxdhackz*\n\n"
-            "☑️ *ᴊᴏɪɴ ᴏᴜʀ ᴄᴏᴅɪɴɢ ᴄʜᴀɴɴᴇʟ ꜰᴏʀ ᴍᴏʀᴇ ʙᴏᴛꜱ ☑️*\n"
-        ).replace('_', '\\_'),
-        reply_markup=keyboard,
-        parse_mode="Markdown"
-    )
-
-# Privacy command handler
-@bot.message_handler(commands=['privacy'])
-def privacy_policy(message):
-    user_id = message.from_user.id
-
-    # Privacy policy content
-    privacy_content = (
-        "🔒 **ᴘʀɪᴠᴀᴄʏ ᴘᴏʟɪᴄʏ ғᴏʀ ᴜʟᴛɪᴍᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ʙᴏᴛ** 🔒\n"
-        "━━━━━━━━━━━━━━━━━\n\n"
-        "ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴜʟᴛɪᴍᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ʙᴏᴛ, ᴛʜᴇ ᴜʟᴛɪᴍᴀᴛᴇ ᴛᴏᴏʟᴋɪᴛ ᴏɴ ᴛᴇʟᴇɢʀᴀᴍ, ᴏғғᴇʀɪɴɢ ᴀ ᴠᴀʀɪᴇᴛʏ ᴏғ ғᴇᴀᴛᴜʀᴇꜱ ᴛᴏ ꜱɪᴍᴘʟɪғʏ ʏᴏᴜʀ ᴛᴀꜱᴋꜱ. ʙʏ ᴜꜱɪɴɢ ᴜʟᴛɪᴍᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ʙᴏᴛ, ʏᴏᴜ ᴀɢʀᴇᴇ ᴛᴏ ᴛʜᴇ ᴛᴇʀᴍꜱ ᴀɴᴅ ᴄᴏɴᴅɪᴛɪᴏɴꜱ ᴏғ ᴛʜɪꜱ ᴘᴏʟɪᴄʏ.\n\n"
-        "🔹 **ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴡᴇ ᴄᴏʟʟᴇᴄᴛ** 🔹\n"
-        "1. **ᴘᴇʀꜱᴏɴᴀʟ ɪɴғᴏʀᴍᴀᴛɪᴏɴ:**\n"
-        "   - ᴜꜱᴇʀ ɪᴅ ᴀɴᴅ ᴜꜱᴇʀɴᴀᴍᴇ: ᴡᴇ ᴄᴏʟʟᴇᴄᴛ ʏᴏᴜʀ ᴜꜱᴇʀ ɪᴅ ᴀɴᴅ ᴜꜱᴇʀɴᴀᴍᴇ ᴛᴏ ᴘʀᴏᴠɪᴅᴇ ᴘᴇʀꜱᴏɴᴀʟɪᴢᴇᴅ ꜱᴇʀᴠɪᴄᴇꜱ.\n"
-        "2. **ᴜꜱᴀɢᴇ ᴅᴀᴛᴀ:**\n"
-        "   - ᴅᴀᴛᴀ ᴏɴ ᴄᴏᴍᴍᴀɴᴅꜱ ᴜꜱᴇᴅ, ᴛᴏᴏʟꜱ ᴀᴄᴄᴇꜱꜱᴇᴅ, ᴀɴᴅ ꜰʀᴇϙᴜᴇɴᴄʏ ᴏғ ᴜꜱᴇ ᴛᴏ ɪᴍᴘʀᴏᴠᴇ ꜱᴇʀᴠɪᴄᴇꜱ.\n\n"
-        "🔹 **ʜᴏᴡ ᴡᴇ ᴜꜱᴇ ʏᴏᴜʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ** 🔹\n"
-        "   - **ꜱᴇʀᴠɪᴄᴇ ᴘʀᴏᴠɪꜱɪᴏɴ:** ᴛᴏ ᴘʀᴏᴠɪᴅᴇ ᴀɴᴅ ᴇɴʜᴀɴᴄᴇ ᴛʜᴇ ꜱᴇʀᴠɪᴄᴇꜱ ᴏғғᴇʀᴇᴅ ʙʏ ᴜʟᴛɪᴍᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ʙᴏᴛ.\n"
-        "   - **ᴄᴏᴍᴍᴜɴɪᴄᴀᴛɪᴏɴ:** ᴛᴏ ᴄᴏᴍᴍᴜɴɪᴄᴀᴛᴇ ᴡɪᴛʜ ʏᴏᴜ ᴀʙᴏᴜᴛ ᴜᴘᴅᴀᴛᴇꜱ & ɴᴇᴡ ꜰᴇᴀᴛᴜʀᴇꜱ.\n"
-        "   - **ꜱᴇᴄᴜʀɪᴛʏ:** ᴛᴏ ᴍᴏɴɪᴛᴏʀ ᴀɴᴅ ᴘʀᴏᴛᴇᴄᴛ ᴀɢᴀɪɴꜱᴛ ᴜɴᴀᴜᴛʜᴏʀɪᴢᴇᴅ ᴀᴄᴄᴇꜱꜱ, ᴀɴᴅ ꜱᴘᴀᴍᴍᴇʀ.\n"
-        "   - **ᴘʀᴏᴍᴏᴛɪᴏɴꜱ ᴀɴᴅ ᴀᴅᴠᴇʀᴛɪꜱᴇᴍᴇɴᴛꜱ:** ᴡᴇ ᴍᴀʏ ꜱʜᴀʀᴇ ᴘᴀɪᴅ ᴘʀᴏᴍᴏᴛɪᴏɴꜱ ᴀɴᴅ ᴀᴅᴠᴇʀᴛɪꜱᴇᴍᴇɴᴛꜱ ᴛʜʀᴏᴜɢʜ ᴛʜᴇ ʙᴏᴛ.\n\n"
-        "🔹 **ᴅᴀᴛᴀ ꜱᴇᴄᴜʀɪᴛʏ** 🔹\n"
-        "   - ᴡᴇ ᴜꜱᴇ ꜱᴇᴄᴜʀɪᴛʏ ᴍᴇᴀꜱᴜʀᴇꜱ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ. 100% ꜱᴇᴄᴜʀᴇ ᴀʟʟ ɪɴғᴏ.\n\n"
-        "ᴛʜᴀɴᴋ ʏᴏᴜ ғᴏʀ ᴜꜱɪɴɢ ᴜʟᴛɪᴍᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ʙᴏᴛ. ᴡᴇ ᴀʀᴇ ᴄᴏᴍᴍɪᴛᴛᴇᴅ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛɪɴɢ ʏᴏᴜʀ ᴘʀɪᴠᴀᴄʏ ᴀɴᴅ ᴇɴꜱᴜʀɪɴɢ ᴀɴ ᴇɴᴊᴏʏᴀʙʟᴇ ᴇxᴘᴇʀɪᴇɴᴄᴇ ᴡɪᴛʜ ᴏᴜʀ ʙᴏᴛ.\n\n"
-        "☑️ ᴊᴏɪɴ ᴏᴜʀ ᴄᴏᴅɪɴɢ ᴄʜᴀɴɴᴇʟ ꜰᴏʀ ᴍᴏʀᴇ ʙᴏᴛꜱ ☑️"
-    ).replace('_', '\\_')
-
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="Close", callback_data="close_privacy"))
-
-    bot.send_message(
-        message.chat.id,
-        privacy_content,
-        parse_mode="Markdown",
-        reply_markup=keyboard
-    )
-
-# Callback handler for closing the privacy policy message
-@bot.callback_query_handler(func=lambda call: call.data == "close_privacy")
-def close_privacy(call):
-    bot.delete_message(call.message.chat.id, call.message.message_id)
-
-# Help command handler
-@bot.message_handler(commands=['help'])
-def help_command(message):
-    user_id = message.from_user.id
-
-    # Help content
-    help_content = (
-        "🔰 **ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ᴜʟᴛɪᴍᴀᴛᴇ ʙᴏᴛ!** 🔰\n\n"
-        "ʜᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ:\n\n"
-        "☑️ **ꜱᴛᴀʀᴛ - ꜱᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ** ☑️\n\n"
-        "📊 **ꜱᴛᴀᴛꜱ - ꜱᴇᴇ ꜱᴛᴀᴛɪꜱᴛɪᴄꜱ** 📊\n\n"
-        "☑️ **ꜱᴇɴᴅ - ʙʀᴏᴀᴅᴄᴀꜱᴛ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ ᴜꜱᴇʀꜱ** ☑️\n\n"
-        "☑️ **ʀᴇᴅᴇᴇᴍ - ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇꜱ** ☑️\n\n"
-        "☑️ **ɢᴇɴ - ɢᴇɴᴇʀᴀᴛᴇ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇꜱ** ☑️\n\n"
-        "☑️ **ᴘᴏꜱᴛ - ᴀᴜᴛᴏ ᴘᴏꜱᴛ ᴛᴏ ᴍᴜʟᴛɪᴘʟᴇ ᴄʜᴀɴɴᴇʟꜱ** ☑️\n\n"
-        "☑️ **ᴘʀɪᴠᴀᴄʏ - ᴘʀɪᴠᴀᴄʏ ᴀɴᴅ ᴘᴏʟɪᴄʏ** ☑️\n\n"
-        "☑️ **ʜᴇʟᴘ - ʙᴏᴛ ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅꜱ ᴇxᴘʟᴀɴᴀᴛɪᴏɴ** ☑️\n\n"
-        "☑️ **ᴜᴘᴅᴀᴛᴇ - ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ** ☑️\n\n"
-        "☑️ **ꜱᴜᴘᴘᴏʀᴛ - ᴄᴏɴᴛᴀᴄᴛ ᴏᴡɴᴇʀ** ☑️\n"
-    ).replace('_', '\\_')
-
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="Close", callback_data="close_help"))
-
-    bot.send_photo(
-        message.chat.id,
-        photo="https://t.me/abir_x_official_developer/94",
-        caption=help_content,
-        parse_mode="Markdown",
-        reply_markup=keyboard
-    )
-
-# Callback handler for closing the help message
-@bot.callback_query_handler(func=lambda call: call.data == "close_help")
-def close_help(call):
-    bot.delete_message(call.message.chat.id, call.message.message_id)
-
-# Update command handler
-@bot.message_handler(commands=['update'])
-def update_bot(message):
-    user_id = message.from_user.id
-
-    # Initial update message with image
-    update_message = bot.send_photo(
-        message.chat.id,
-        photo="https://t.me/abir_x_official_developer/95",
-        caption="ʀᴇᴅᴇᴇᴍ ᴜʟᴛɪᴍᴀᴛᴇ ʙᴏᴛ ᴜᴘᴅᴀᴛɪɴɢ..........☑️"
-    )
-
-    # Progress bar animation
-    progress_bar = ['░'] * 20
-    for i in range(1, 21):
-        progress_bar[i-1] = '▓'
-        progress = ''.join(progress_bar)
-        bot.edit_message_caption(
-            caption=f"ʀᴇᴅᴇᴇᴍ ᴜʟᴛɪᴍᴀᴛᴇ ʙᴏᴛ ᴜᴘᴅᴀᴛɪɴɢ..........☑️\n[{progress}] {i*5}%",
-            chat_id=update_message.chat.id,
-            message_id=update_message.message_id
-        )
-        time.sleep(0.1)  # Simulate progress
-
-    # Delete the update message after animation
-    bot.delete_message(update_message.chat.id, update_message.message_id)
-
-    # Final update message with image and button
-    final_message = (
-        "ʜᴇʏ ʙʀᴏ ! ʙᴏᴛ ᴜᴘᴅᴀᴛᴇᴅ ᴛᴏ ꜱᴜᴘʀᴇᴍᴇ☑️\n"
-        "ᴜꜱᴇ /start ᴄᴏᴍᴍᴀɴᴅ ᴛᴏ ꜱᴇᴇ☑️"
-    ).replace('_', '\\_')
-
-    # Button for more updates
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="☑️For More Updates Join ☑️", url="https://t.me/ModVipRM"))
-
-    bot.send_photo(
-        message.chat.id,
-        photo="https://t.me/abir_x_official_developer/96",
-        caption=final_message,
-        parse_mode="Markdown",
-        reply_markup=keyboard
-    )
-
-# Support command handler
-@bot.message_handler(commands=['support'])
-def support_command(message):
-    user_id = message.from_user.id
-
-    # Provide a cancel button
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="Cancel", callback_data="cancel_support"))
-
-    # Prompt the user for their problem with an image
-    support_message = bot.send_photo(
-        message.chat.id,
-        photo="https://t.me/abir_x_official_developer/97",
-        caption="ʜᴇʏ ʙʀᴏ ʏᴏᴜ ᴍɪɢʜᴛ ʙᴇ ꜰᴇᴛᴄʜɪɴɢ ᴘʀᴏʙʟᴇᴍ ᴡɪᴛʜ ʙᴏᴛ ᴘʟᴇᴀꜱᴇ ᴛᴇʟʟ ᴜꜱ ʏᴏᴜʀ ᴘʀᴏʙʟᴇᴍ",
-        reply_markup=keyboard
-    )
-
-    # Register next step handler for the user's response
-    bot.register_next_step_handler(support_message, handle_support_message)
-
-# Handle the support message from the user
-def handle_support_message(message):
-    if message.text:
-        # Forward the user's message to the bot owner
-        forwarded_message = bot.forward_message(OWNER_USER_ID, message.chat.id, message.message_id)
-
-        # Store the mapping of the forwarded message to the original user
-        forwarded_messages[forwarded_message.message_id] = message.chat.id
-
-        # Notify the user that their message has been forwarded with an image
-        bot.send_photo(
-            message.chat.id,
-            photo="https://t.me/abir_x_official_developer/103",
-            caption="ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴛ ᴛᴏ ᴛʜᴇ ʙᴏᴛ ᴏᴡɴᴇʀ. ᴛʜᴇʏ ᴡɪʟʟ ʀᴇᴘʟʏ ᴛᴏ ʏᴏᴜ ꜱʜᴏʀᴛʟʏ."
-        )
-
-        # Notify the owner that a new support message has been received with an image
-        bot.send_photo(
-            OWNER_USER_ID,
-            photo="https://t.me/abir_x_official_developer/102",
-            caption=f"ɴᴇᴡ ꜱᴜᴘᴘᴏʀᴛ ᴍᴇꜱꜱᴀɢᴇ ꜰʀᴏᴍ @{message.from_user.username} (ID: {message.from_user.id}). ʀᴇᴘʟʏ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ ʀᴇꜱᴘᴏɴᴅ."
-        )
-
-# Callback handler for canceling support input
-@bot.callback_query_handler(func=lambda call: call.data == "cancel_support")
-def cancel_support(call):
-    bot.delete_message(call.message.chat.id, call.message.message_id)
-    bot.send_photo(
-        call.message.chat.id,
-        photo="https://t.me/abir_x_official_developer/98",
-        caption="ᴏᴡɴᴇʀ ᴄᴏɴᴛᴀᴄᴛ ᴄᴀɴᴄᴇʟʟᴇᴅ."
-    )
-    # Clear the step handler to avoid processing further messages
-    bot.clear_step_handler_by_chat_id(call.message.chat.id)
-
-# Handle replies from the bot owner
-@bot.message_handler(func=lambda message: message.reply_to_message and message.reply_to_message.message_id in forwarded_messages)
-def handle_owner_reply(message):
-    original_user_id = forwarded_messages.get(message.reply_to_message.message_id)
-
-    if original_user_id:
-        bot.send_photo(
-            original_user_id,
-            photo="https://t.me/abir_x_official_developer/101",
-            caption=f"ᴏᴡɴᴇʀ ʀᴇᴘʟʏ ᴛᴏ ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ: {message.text}"
-        )
-
-        # Notify the owner that their reply has been sent
-        bot.send_message(
-            OWNER_USER_ID,
-            "ʏᴏᴜʀ ʀᴇᴘʟʏ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴛ ᴛᴏ ᴛʜᴇ ᴜꜱᴇʀ."
-        )
-
-# /info command handler
-@bot.message_handler(commands=['info'])
-def info_command(message):
-    info_text = (
-        "ʙᴏᴛ ʟᴀɴɢᴜᴀɢᴇ: ᴘʏᴛʜᴏɴ ☑️\n"
-        "ʙᴏᴛ ʟɪʙʀᴀʀʏ: ᴘʏᴛʜᴏɴ ᴛᴇʟᴇʙᴏᴛ ☑️\n"
-        "ʙᴏᴛ ʜᴏꜱᴛᴇᴅ ᴏɴ: ᴘᴇʟʟᴀ.ᴀᴘᴘ ☑️\n"
-        "ʙᴏᴛ ʜᴏꜱᴛᴇᴅ ʙʏ: @abirxdhackz ☑️\n"
-        "ʙᴏᴛ ᴍᴀɪɴᴛᴀɪɴᴇᴅ ʙʏ: @ModVipRM ☑️\n"
-        "ʙᴏᴛ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ: @ModVipRM ☑️\n"
-        "ʙᴏᴛ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ: @ModVipRM_Discussion ☑️\n"
-        "ʙᴏᴛ ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ: ʙʀᴏ ɪᴛ ɪꜱ ᴘᴀɪᴅ ᴅᴍ @abirxdhackz ☑️\n"
-        "ʙᴏᴛ ᴘᴀʏᴍᴇɴᴛ ᴄʜᴀɴɴᴇʟ: @Proofchannelch ☑️"
-    )
-
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="Contact Owner ☑️", url="https://t.me/abirxdhackz"))
-    keyboard.add(InlineKeyboardButton(text="Update Channel ☑️", url="https://t.me/ModVipRM"))
-
-    # Send the image with the info text as the caption
-    image_url = "https://t.me/abir_x_official_developer/105"
-    bot.send_photo(message.chat.id, image_url, caption=info_text, reply_markup=keyboard)
-
-def send_faq_menu(chat_id, message_id=None):
-    # FAQ questions and answers
-    faqs = {
-        "ʜᴏᴡ ᴛᴏ ʀᴇᴅᴇᴇᴍ ᴀ ᴄᴏᴅᴇ ?": (
-            "☑️ ғɪʀꜱᴛ ᴏᴘᴇɴ ᴛʜᴇ ʙᴏᴛ.\n\n"
-            "☑️ ᴛʜᴇɴ ᴊᴏɪɴ ᴀʟʟ ᴄʜᴀɴɴᴇʟꜱ.\n\n"
-            "☑️ ᴛʜᴇɴ ᴜꜱᴇ /redeem ᴄᴏᴍᴍᴀɴᴅ ᴀɴᴅ ᴀꜰᴛᴇʀ ɪᴛ ᴘᴀꜱᴛᴇ ʏᴏᴜʀ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ꜰᴏᴜɴᴅ ꜰʀᴏᴍ ᴏᴜʀ ᴄʜᴀɴɴᴇʟꜱ.\n\n"
-            "☑️ ᴇxᴀᴍᴘʟᴇ\n\n"
-            "/redeem CRUNCHYROLL-5350-3031-9889"
-        ),
-        "ᴡɪʟʟ ᴀ ᴘᴇʀꜱᴏɴ ᴄᴀɴ ʀᴇᴅᴇᴇᴍ ᴍᴜʟᴛɪᴘʟᴇ ᴛɪᴍᴇ?": 
-            "❌ ɴᴏ ʙʀᴏ ɴᴏɴᴇ ᴄᴀɴ ʀᴇᴅᴇᴇᴍ ᴍᴜʟᴛɪᴘʟᴇ ᴛɪᴍᴇ ᴀꜱ ᴏᴜʀ ʙᴏᴛ ꜱᴇᴄᴜʀɪᴛʏ ☑️",
-        "ɪꜱ ᴛʜᴇ ʙᴏᴛ ᴘᴀɪᴅ?": 
-            "❌ ɴᴏ ʙʀᴏ ʙᴏᴛ ɪꜱ ɴᴏᴛ ᴘᴀɪᴅ ʏᴏᴜ ᴊᴜꜱᴛ ʜᴀᴠᴇ ᴛᴏ ᴊᴏɪɴ 4 ᴄʜᴀɴɴᴇʟꜱ ᴛᴏ ᴜꜱᴇ ɪᴛ ☑️",
-        "ᴄᴀɴ ᴛʜᴇ ʙᴏᴛ ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʙᴇ ꜱʜᴀʀᴇᴅ?": 
-            "❌ ɴᴏ ʙʀᴏ ʙᴏᴛ ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ɪꜱ ᴘᴀɪᴅ ᴅᴍ @abirxdhackz ꜰᴏʀ ɪᴛ. ☑️"
-    }
-
-    # Create the caption with questions in bold and answers in normal text
-    faq_caption = "☑️ <b>Frequently Asked Questions:</b>\n\n"
-    for question, answer in faqs.items():
-        faq_caption += f"🔹 <b>{question}</b>\n"
-        faq_caption += f"{answer}\n\n"
-    
-    # Add the inline button
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text="🙋 Ask Questions In Community ☑️", url="https://t.me/ModVipRM_Discussion"))
-
-    # Send the image with the caption and inline button
-    image_url = "https://t.me/abir_x_official_developer/106"
-    if message_id:
-        bot.edit_message_media(chat_id=chat_id, message_id=message_id, media=telebot.types.InputMediaPhoto(image_url, caption=faq_caption, parse_mode='HTML'), reply_markup=keyboard)
-    else:
-        bot.send_photo(chat_id, image_url, caption=faq_caption, reply_markup=keyboard, parse_mode='HTML')
-
-# /faq command handler
-@bot.message_handler(commands=['faq'])
-def faq_command(message):
-    send_faq_menu(message.chat.id)
 
 # Start the bot
 print("Bot is running...")
