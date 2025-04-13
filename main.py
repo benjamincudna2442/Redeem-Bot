@@ -5,10 +5,10 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQu
 from datetime import datetime, timedelta
 
 # Bot token
-BOT_TOKEN = '7701905324:AAGrLHNe5wuAIzVHLv2yVRiS1vFaNekvKug'
+BOT_TOKEN = '7217012373:AAHFRCmGs10I0jFE3qCHAjS4db3eE6ewn_c'
 OWNER_USER_ID = 7303810912
 PROOF_CHANNEL_ID = -1002113563800 #Replace With The Chat Id Of The Channel Which Will Be Proof Channel
-FORWARD_CHANNEL_IDS = [-1001676737394, -1002181773077, -1002224203739] #Replace With The Ids Of The Channel To Be Posted
+FORWARD_CHANNEL_IDS = [-1002224203739, -1001974696244, -1002113563800] #Replace With The Ids Of The Channel To Be Posted
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -111,13 +111,13 @@ def start(message):
                 caption=("*Welcome to Redeem Code ABIR XD Bot!*\n\n"
                          "*You can now use the bot.*\n"
                          "*Use /redeem <code> to redeem a code.*\n"
-                         "*OWNER: @abirxdhackz*\n"
-                         "*Join: ModVipRM*").replace('_', '\\_'),
+                         "*OWNER: @ISmartDevs*\n"
+                         "*Join: ModVipRM*"),
                 reply_markup=keyboard,
                 parse_mode="Markdown"
             )
         else:
-            bot.send_message(message.chat.id, "*Welcome back! You are already joined! Use /redeem <code> to redeem.*".replace('_', '\\_'), parse_mode="Markdown")
+            bot.send_message(message.chat.id, "*Welcome back! You are already joined! Use /redeem <code> to redeem.*", parse_mode="Markdown")
     except telebot.apihelper.ApiTelegramException as e:
         if e.error_code == 403:
             print(f"User {user_id} has blocked the bot.")
@@ -130,14 +130,14 @@ def joined_check(call):
     user_id = call.from_user.id
     if is_user_in_channels(user_id):
         bot.answer_callback_query(call.id, "You have joined the channels!")
-        bot.send_message(call.message.chat.id, "*You can now use the bot. Use /redeem <code> to redeem a code.*".replace('_', '\\_'), parse_mode="Markdown")
+        bot.send_message(call.message.chat.id, "*You can now use the bot. Use /redeem <code> to redeem a code.*", parse_mode="Markdown")
     else:
         bot.answer_callback_query(call.id, "Please join all required channels first.", show_alert=True)
 
 # Generate redeem codes (Owner only)
 @bot.message_handler(commands=['gen'])
 def generate_codes(message):
-    if message.from_user.username != "abirxdhackz":
+    if message.from_user.username != "ISmartDevs":
         bot.reply_to(message, "You are not authorized to use this command.")
         return
 
@@ -145,7 +145,7 @@ def generate_codes(message):
         _, count, service_name = message.text.split()
         count = int(count)
     except ValueError:
-        bot.reply_to(message, "*Usage: /gen <number_of_codes> <service_name>*".replace('_', '\\_'), parse_mode="Markdown")
+        bot.reply_to(message, "*Usage: /gen <number_of_codes> <service_name>*", parse_mode="Markdown")
         return
 
     valid_services = [
@@ -153,7 +153,7 @@ def generate_codes(message):
     ]
 
     if service_name not in valid_services:
-        bot.reply_to(message, f"*Invalid service name. Please choose from: {', '.join(valid_services)}*".replace('_', '\\_'), parse_mode="Markdown")
+        bot.reply_to(message, f"*Invalid service name. Please choose from: {', '.join(valid_services)}*", parse_mode="Markdown")
         return
 
     codes = []
@@ -168,11 +168,11 @@ def generate_codes(message):
 
     keyboard = InlineKeyboardMarkup()
     keyboard.add(InlineKeyboardButton(text="🧾 Updates Channel ☑️", url="https://t.me/ModVipRM"))
-    keyboard.add(InlineKeyboardButton(text="🤖 Bot Owner ☑️", url="https://t.me/abirxdhackz"))
+    keyboard.add(InlineKeyboardButton(text="🤖 Bot Owner ☑️", url="https://t.me/ISmartDevs"))
 
     bot.reply_to(
         message,
-        f"*Hey Bro All The Codes Generated Are Below For {service_name}.*\n\n{formatted_codes}\n\n*Need help? Join our channels or contact the bot owner for assistance!*".replace('_', '\\_'),
+        f"*Hey Bro All The Codes Generated Are Below For {service_name}.*\n\n{formatted_codes}\n\n*Need help? Join our channels or contact the bot owner for assistance!*",
         parse_mode="Markdown",
         reply_markup=keyboard
     )
@@ -180,7 +180,7 @@ def generate_codes(message):
 # Post command handler
 @bot.message_handler(commands=['post'])
 def post_announcement(message):
-    if message.from_user.username != "abirxdhackz":
+    if message.from_user.username != "ISmartDevs":
         bot.reply_to(message, "You are not authorized to use this command.")
         return
 
@@ -208,12 +208,12 @@ def post_announcement(message):
         f"➡️ *Redeem From This Bot-  Xtreme Redeem ⚡️ [Open Bot To Redeem](https://t.me/Redeem_Ultimate_Bot)*\n\n"
         "🔹 *First 05 Users Will Win It* 🔺\n"
         "🔹 *Hurry Up! Only The First 5 Users Will Win This Giveaway !* ⌛️\n\n"
-        "❤️ *Send Screenshot There- @abirxdhackz* ✅ ✔️\n\n"
+        "❤️ *Send Screenshot There- @ISmartDevs* ✅ ✔️\n\n"
         "➡️ *Share Our Channel For More Exciting Giveaways* ✅\n"
-        "➡️ *For More Enquiry —— ❤️ @abirxdhackz* ✔️\n"
+        "➡️ *For More Enquiry —— ❤️ @ISmartDevs* ✔️\n"
         "➡️ *For More Information Check @ModVipRM* ☝️\n\n"
         "❤️ *Thank You For Staying With Us* ❤️"
-    ).replace('\\', '_')
+    )
 
     # Get the image URL for the service
     image_url = service_images.get(service_name, "https://t.me/abir_x_official_developer/82")
@@ -286,13 +286,13 @@ def redeem_code(message):
                      f"👤 *Name:* {redeemer['full_name']}\n"
                      f"📛 *Username:* {redeemer['username']}\n"
                      f"🆔 *ID:* {redeemer['user_id']}\n"
-                     f"⏰ *Time:* {redeemer['time']}").replace('_', '\\_'),
+                     f"⏰ *Time:* {redeemer['time']}"),
             parse_mode="Markdown"
         )
         return
 
     if user_id in [data['user_id'] for data in generated_codes.values() if data]:
-        bot.send_message(message.chat.id, "*You have already redeemed a code.*".replace('_', '\\_'), parse_mode="Markdown")
+        bot.send_message(message.chat.id, "*You have already redeemed a code.*", parse_mode="Markdown")
         return
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -327,7 +327,7 @@ def redeem_code(message):
                      f"📛 *Username:* {username}\n"
                      f"🆔 *ID:* {user_id}\n"
                      f"⏰ *Time:* {timestamp}\n"
-                     f"🔗 *Your {service_name} Premium link:* {promo_link}").replace('_', '\\_'),
+                     f"🔗 *Your {service_name} Premium link:* {promo_link}"),
             reply_markup=keyboard,
             parse_mode="Markdown"
         )
@@ -344,7 +344,7 @@ def redeem_code(message):
                      f"📛 *Username:* {username}\n"
                      f"🆔 *ID:* {user_id}\n"
                      f"⏰ *Time:* {timestamp}\n"
-                     f"{promo_text}").replace('_', '\\_'),
+                     f"{promo_text}"),
             reply_markup=keyboard,
             parse_mode="Markdown"
         )
@@ -355,7 +355,7 @@ def redeem_code(message):
                      f"🆔 *ID:* {user_id}\n"
                      f"⏰ *Time:* {timestamp}\n\n"
                      f"*Use the bot to get your own {service_name} Premium account!*\n"
-                     f"*Join our channels for more updates and giveaways!*").replace('_', '\\_')
+                     f"*Join our channels for more updates and giveaways!*")
 
     proof_keyboard = InlineKeyboardMarkup()
     proof_keyboard.add(InlineKeyboardButton(text="🤖 Get Premium Account Now ☑️", url="https://t.me/Redeem_Ultimate_Bot"))
@@ -376,7 +376,7 @@ def ask_broadcast_message(message):
         bot.reply_to(message, "You are not authorized to use this command.")
         return
 
-    msg = bot.reply_to(message, "*Please Enter A Message To Broadcast To Users*".replace('_', '\\_'), parse_mode="Markdown")
+    msg = bot.reply_to(message, "*Please Enter A Message To Broadcast To Users*", parse_mode="Markdown")
     bot.register_next_step_handler(msg, broadcast_message)
 
 def broadcast_message(message):
@@ -384,7 +384,7 @@ def broadcast_message(message):
         bot.reply_to(message, "You are not authorized to use this command.")
         return
 
-    broadcast_text = f"*📢 [ Broadcast From Owner ] 📢*\n\n{message.text}\n\n*For More Updates, [Join Now](https://t.me/ModVipRM)*".replace('_', '\\_')
+    broadcast_text = f"*📢 [ Broadcast From Owner ] 📢*\n\n{message.text}\n\n*For More Updates, [Join Now](https://t.me/ModVipRM)*"
     keyboard = InlineKeyboardMarkup()
     keyboard.add(InlineKeyboardButton(text="☑️ Join Our All Community 🥰", url="https://t.me/addlist/wskLZdSg8K02NzVl"))
 
@@ -395,7 +395,7 @@ def broadcast_message(message):
             print(f"Error sending message to user {user_id}: {e}")
 
     # Notify the owner that the broadcast was successful
-    bot.send_message(OWNER_USER_ID, "*Broadcast successful!*".replace('_', '\\_'), parse_mode="Markdown")
+    bot.send_message(OWNER_USER_ID, "*Broadcast successful!*", parse_mode="Markdown")
 
 # Start the bot
 print("Bot is running...")
